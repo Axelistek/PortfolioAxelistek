@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Main Page</title>
+<style>
+/*** VCR OSD Mono Font ***/
+@font-face {
+    font-family: 'VCR_OSD_Mono';
+    src: url('font/VCR_OSD_MONO_1.001.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*** FAKE WINDOWS CSS (WITH VCR FONT) ***/
+body { 
+    background-image: url("image/Pozadina.png"); 
+    background-size: cover;      
+    background-repeat: no-repeat; 
+    background-position: center;  
+    background-attachment: fixed; 
+    font-family: 'VCR_OSD_Mono', monospace;
+    font-size: 0.875em;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+} 
+
+center { text-align: center; } 
+
+/* Make all text white */
+#wrapper, #wrapper * {
+    color: white;
+}
+
+/* Flicker Effect */
+@keyframes flicker {
+0% {opacity: 0.27861;}
+5% {opacity: 0.34769;}
+10% {opacity: 0.23604;}
+15% {opacity: 0.90626;}
+20% {opacity: 0.18128;}
+25% {opacity: 0.83891;}
+30% {opacity: 0.65583;}
+35% {opacity: 0.67807;}
+40% {opacity: 0.26559;}
+45% {opacity: 0.84693;}
+50% {opacity: 0.96019;}
+55% {opacity: 0.08594;}
+60% {opacity: 0.20313;}
+65% {opacity: 0.71988;}
+70% {opacity: 0.53455;}
+75% {opacity: 0.37288;}
+80% {opacity: 0.71428;}
+85% {opacity: 0.70419;}
+90% {opacity: 0.7003;}
+95% {opacity: 0.36108;}
+100% {opacity: 0.24387;}
+}
+
+#wrapper::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(18, 16, 16, 0.1);
+    opacity: 0;
+    z-index: 2;
+    pointer-events: none;
+    animation: flicker 0.15s infinite;
+}
+
+#wrapper::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 2;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+}
+
+/* WRAPPER */
+#wrapper { 
+    width: 1150px;
+    height: min-content;
+    min-height: 800px;  
+    background: rgba(0, 0, 0, 0.3);
+    margin: 0 auto; 
+    margin-top: 0px; 
+    padding-bottom: 90px; 
+    position: relative; 
+    z-index: 1;
+} 
+
+.wrapper-2 { 
+    position: relative; 
+    min-height: 800px; 
+} 
+
+.header { 
+    text-align: center; 
+    padding: 0px 0; 
+} 
+.header img { 
+    width: 400%; 
+    max-width: 1150px; 
+    height: 250px; 
+} 
+
+.footer { height: 10px; } 
+.title { padding: 15px 10px 10px 20px; } 
+.title h1 { padding: 0; margin: 0; } 
+
+/* Links as image buttons */
+.links {
+    padding: 5px; 
+    text-align: center;
+}
+
+.link-home { margin: 0 35px; display: inline-block; }
+.link-gallery { margin: 0 20px; display: inline-block; }
+.link-projects { margin: 0 30px; display: inline-block; }
+.link-contact { margin: 0 15px; display: inline-block; }
+
+.btn-home { width: 70px; height: auto; }
+.btn-gallery { width: 100px; height: auto; }
+.btn-projects { width: 110px; height: auto; }
+.btn-contact { width: 100px; height: auto; }
+
+.btn-home:hover { content: url("image/buttons/Home_ButtonClick.png"); }
+.btn-gallery:hover { content: url("image/buttons/GalleryClick_Button.png"); }
+.btn-projects:hover { content: url("image/buttons/ProjectsClick_Button.png"); }
+.btn-contact:hover { content: url("image/buttons/ContactClick_Button.png"); }
+
+.sidebar-left { width: 200px; position: absolute; top: 0; left: 10px; } 
+.sidebar-right { width: 250px; position: absolute; top: 0; right: 10px; }
+
+/* ⭐ ALIGN ALL TOP BOXES ⭐ */
+.sidebar-left .box,
+.sidebar-right .box {
+    height: auto;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+.main { margin-left: 220px; margin-right: 270px; width: auto; } 
+
+.box { 
+    padding: 5px 10px; 
+    background: url("image/SquaresBackround.png"); 
+    background-size: cover; 
+    background-position: center;
+    color: white;          
+    margin: 0 0 10px 0; 
+    border: none;          
+}
+
+.box h1,
+.box h2,
+.box h3,
+.box p { opacity: 0.9; line-height: 1.2; }
+
+.box-projects {
+    background: url("image/PozadinaVertical.png") !important;
+    background-size: cover !important;
+    background-position: center !important;
+}
+
+.box img { max-width: 100%; height: auto; } 
+
+/* Social Icons container */
+.social-list {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.social-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: white;
+    transition: transform 0.2s;
+}
+
+.social-item:hover {
+    transform: translateX(5px);
+}
+
+/* Manual spacing for each social icon */
+.social-item.instagram { margin-bottom: 25px; }
+.social-item.twitter   { margin-bottom: 20px; }
+.social-item.tumblr    { margin-bottom: 25px; }
+.social-item.kofi      { margin-bottom: 13px; }
+.social-item.artfight  { margin-bottom: 15px; }
+
+/* Icon hover glow */
+.icon-wrap {
+    position: relative;
+    width: 35px;
+    height: 35px;
+}
+
+.icon {
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.15s linear;
+}
+
+.icon.glow {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+}
+
+.social-item:hover .icon.normal { opacity: 0; }
+.social-item:hover .icon.glow { opacity: 1; }
+
+/* Main box layout */
+.box-main {
+    min-height: 200px; 
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.box-content {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-start;
+    gap: 20px;
+    position: relative;
+}
+
+.box-img {
+    width: 300px;       
+    height: 300px;      
+    margin-top: 40px;   
+    flex-shrink: 0;     
+    object-fit: contain;
+}
+
+.project-item {
+    text-align: center;
+    cursor: pointer;
+    margin-bottom: 60px;
+    margin-top: 60px;
+}
+
+.project-item img {
+    width: 350px;
+    height: auto;
+    margin: 20px 0;
+    transition: transform 0.2s;
+}
+
+.project-item img:hover,
+.project-item h2:hover {
+    transform: scale(1.05);
+}
+
+.project-item h2,
+.project-item a {
+    color: white;
+    text-decoration: none;
+}
+
+.project-item h2:hover {
+    cursor: pointer;
+}
+
+.project-subtitle {
+    font-style: italic;
+    font-size: 0.9em;
+    margin: 5px 0 15px 0;
+    opacity: 0.8;
+}
+
+.project-item p {
+    text-align: justify;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+.project-images-side-by-side {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.project-images-side-by-side img {
+    width: 300px;
+    height: auto;
+    transition: transform 0.2s;
+}
+
+.project-images-side-by-side img:hover {
+    transform: scale(1.05);
+}
+
+.box-text {
+    flex: 1;
+    margin-right: 60px; 
+    padding-left: 20px; 
+    text-align: left;
+}
+
+/* Auto-gallery */
+.auto-gallery {
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 0;
+}
+
+.auto-gallery-track {
+    display: flex;
+    gap: 10px;
+    animation: scrollLoop 25s linear infinite;
+}
+
+.auto-gallery-track img {
+    height: 180px;
+    width: auto;
+    border: 2px solid white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auto-gallery-track img:hover {
+    transform: scale(1.15);
+    box-shadow: 0 8px 16px rgba(255, 255, 255, 0.3);
+}
+
+/* Lightbox Modal */
+.lightbox {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 85vw;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lightbox-image {
+    max-width: calc(100% - 140px);
+    max-height: 70vh;
+    min-width: 400px;
+    min-height: 400px;
+    object-fit: contain;
+    background: transparent;
+}
+
+.lightbox-info {
+    margin-top: 20px;
+    text-align: center;
+    color: white;
+    font-family: 'VCR_OSD_Mono', monospace;
+}
+
+.lightbox-info h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.5em;
+}
+
+.lightbox-info p {
+    margin: 0;
+    font-size: 1em;
+    max-width: 600px;
+}
+
+.lightbox-close {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    color: white;
+    font-size: 2.5em;
+    cursor: pointer;
+    transition: transform 0.2s;
+    z-index: 1002;
+}
+
+.lightbox-close:hover {
+    transform: scale(1.2);
+}
+
+.lightbox-arrow {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 3em;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s, text-shadow 0.2s;
+    user-select: none;
+    z-index: 1001;
+}
+
+.lightbox-arrow:hover {
+    transform: translateY(-50%) scale(1.2);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+}
+
+.lightbox-prev {
+    left: 50px;
+}
+
+.lightbox-next {
+    right: 50px;
+}
+
+.lightbox-toggle-alt {
+    margin-top: 15px;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid white;
+    border-radius: 4px;
+    font-family: 'VCR_OSD_Mono', monospace;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.lightbox-toggle-alt:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.05);
+}
+
+@keyframes scrollLoop {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+/* Typewriter Effect */
+@keyframes typewriter {
+    0% {
+        width: 0;
+    }
+    50% {
+        width: 100%;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes blink {
+    from, to {
+        border-color: transparent;
+    }
+    50% {
+        border-color: white;
+    }
+}
+
+.typewriter {
+    display: inline-block;
+    overflow: hidden;
+    border-right: 3px solid white;
+    white-space: nowrap;
+    animation: typewriter 5s steps(40, end) infinite;
+}
+
+/* Sitemap and Commissions Buttons */
+.sidebar-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.sidebar-btn {
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+    color: white;
+    cursor: pointer;
+    font-family: 'VCR_OSD_Mono', monospace;
+    font-size: 0.85em;
+    text-align: center;
+    transition: all 0.2s;
+    text-decoration: none;
+    display: block;
+}
+
+.sidebar-btn:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.05);
+}
+
+/* Commissions Window */
+.commissions-window {
+    margin-top: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.commissions-window a {
+    text-decoration: none;
+    display: block;
+}
+
+.commissions-window img {
+    width: 100%;
+    height: auto;
+    border: 2px solid white;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.commissions-window a:hover img {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+}
+
+/* Notice Board Styling */
+.notice-board {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.notice-board h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.1em;
+}
+
+.notice-container {
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.notice-arrow {
+    font-size: 2em;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s;
+    padding: 5px 10px;
+    flex-shrink: 0;
+}
+
+.notice-arrow:hover {
+    color: #00A0FF;
+    transform: scale(1.2);
+}
+
+.notice-arrow-left {
+    order: 1;
+}
+
+.notice-arrow-right {
+    order: 3;
+}
+
+.notice-display {
+    order: 2;
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.notice-item {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 2px solid white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    background: rgba(0, 160, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notice-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.notice-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 160, 255, 0.6);
+    border-color: #00A0FF;
+}
+
+.notice-item:hover img {
+    transform: scale(1.05);
+}
+
+.notice-popup {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.95);
+    border-top: 2px solid #00A0FF;
+    padding: 12px;
+    color: white;
+    font-size: 0.85em;
+    line-height: 1.4;
+    transition: all 0.3s ease;
+    max-height: 0;
+    overflow: hidden;
+}
+
+.notice-item:hover .notice-popup {
+    max-height: 150px;
+}
+
+.notice-popup h4 {
+    margin: 0 0 6px 0;
+    color: #00A0FF;
+    font-size: 1em;
+}
+
+.notice-popup p {
+    margin: 0 0 6px 0;
+}
+
+.notice-popup .notice-list {
+    font-size: 0.9em;
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(0, 160, 255, 0.3);
+    opacity: 0.9;
+}
+
+.notice-indicators {
+    text-align: center;
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+}
+
+.notice-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.notice-dot.active {
+    background: #00A0FF;
+    transform: scale(1.3);
+}
+
+/* Series Navigation */
+.series-nav {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 15px;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.series-arrow {
+    font-size: 2.5em;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s;
+    padding: 10px 15px;
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+    pointer-events: all;
+}
+
+.series-arrow:hover {
+    color: #00A0FF;
+    transform: scale(1.2);
+    text-shadow: 0 0 12px rgba(0, 160, 255, 0.8);
+}
+
+.series-indicators {
+    display: none;
+    justify-content: center;
+    gap: 4px;
+    margin-top: 6px;
+}
+
+.series-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.series-dot.active {
+    background: #00A0FF;
+    transform: scale(1.2);
+}
+
+/* Changelog Styling */
+.changelog-container {
+    max-height: 250px;
+    overflow-y: auto;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    margin-top: 8px;
+}
+
+.changelog-item {
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.8em;
+    line-height: 1.3;
+}
+
+.changelog-item:last-child {
+    border-bottom: none;
+}
+
+.changelog-date {
+    color: #00A0FF;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.changelog-text {
+    color: #ffffff;
+    opacity: 0.9;
+}
+
+@media(max-width:1180px) { 
+    #wrapper { width: calc(440px + 50vw); } 
+    .main { width: 50vw; } 
+} 
+@media(max-width:910px) { 
+    #wrapper { width: calc(360px + 52vw); } 
+    .sidebar-left, .sidebar-right { width: 160px; } 
+    .main { margin-left: 180px; margin-right: 180px; width: 52vw; } 
+} 
+@media(orientation:portrait) { 
+    #wrapper { width: 96vw; } 
+    .wrapper-2 { width: 94vw; } 
+    .sidebar-left, .main, .sidebar-right { position: relative; width: 92vw; margin: 0.25rem 1vw; } 
+} 
+</style>
+</head>
+<body>
+
+<!-- Background Music -->
+<audio id="bg-music" autoplay loop style="display:none;">
+  <source src="audio/songback.mp3" type="audio/mpeg">
+</audio>
+<script>
+const audio = document.getElementById('bg-music');
+audio.volume = 0.2;
+</script>
+
+<div id="wrapper"> 
+    <div class="header"> 
+        <img src="image/banner.gif" alt="Banner"> 
+    </div> 
+    <div class="title"><h1></h1></div> 
+
+    <div class="links">
+        <div class="link-home"><a href="home.html" onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;"><img src="image/buttons/Home_Button.png" alt="Home" class="btn-home"></a></div>
+        <div class="link-gallery"><a href="Gallery.html" onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;"><img src="image/buttons/Gallery_Button.png" alt="Gallery" class="btn-gallery"></a></div>
+        <div class="link-projects"><a href="Projects.html" onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;"><img src="image/buttons/Projects_Button.png" alt="Projects" class="btn-projects"></a></div>
+        <div class="link-contact"><a href="Contact.html" onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;"><img src="image/buttons/Contact_Button.png" alt="Contact" class="btn-contact"></a></div>
+    </div>
+
+    <div class="wrapper-2"> 
+        <div class="sidebar-left"> 
+            <div class="box"> 
+                <div class="sidebar-buttons">
+                    <a href="Sitemap.html" class="sidebar-btn" onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;">SITEMAP</a>
+                </div>
+                <p style="font-size: 0.85em; margin-top: 15px;"><strong>CHANGELOG</strong></p>
+                <div class="changelog-container">
+                    <div class="changelog-item">
+                        <span class="changelog-date">Jan 17, 2026</span>
+                        <span class="changelog-text">Added sitemap, commissions window, and typewriter animation</span>
+                    </div>
+                    <div class="changelog-item">
+                        <span class="changelog-date">Jan 16, 2026</span>
+                        <span class="changelog-text">Increased gallery size</span>
+                    </div>
+                    <div class="changelog-item">
+                        <span class="changelog-date">Jan 15, 2026</span>
+                        <span class="changelog-text">Website launch</span>
+                    </div>
+                </div>
+                
+                <div class="commissions-window">
+                    <a href="Commissions.html" onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;">
+                        <img src="image/commissions-closed.png" alt="Commissions Status" id="commissionsImg">
+                    </a>
+                </div>
+            </div> 
+        </div> 
+
+        <div class="main"> 
+            <div class="box box-main"> 
+                <div class="box-content">
+                    <img src="image/idle.gif" alt="Side Image" class="box-img">
+                    <div class="box-text">
+                        <p><span class="typewriter">Hello! I'm Axel, aka. Axelsitek</span></p> 
+                        <p>Welcome to my personal website! Here, you can explore my projects, view my gallery, and learn more about me.</p>
+                        <p>I’m a college student studying Media Design, currently creating a visual novel based on a story from 2020.</p>
+                        <p>If you’d like to reach out, feel free to contact me via Gmail or Instagram. :)</p>
+                    </div>
+                </div>
+            </div> 
+
+            <div class="box">
+                <h3>NOTICE BOARD</h3>
+                <p style="font-size: 0.9em; margin: 5px 0 10px 0;">Current Events & Projects</p>
+
+                <div class="notice-container">
+                    <span class="notice-arrow notice-arrow-left" onclick="prevNotice()">&lt;</span>
+                    
+                    <div class="notice-display">
+                        <div class="notice-item" id="noticeItem">
+                            <img src="image/notice-event1.png" alt="Event 1" id="noticeImg">
+                            <div class="notice-popup">
+                                <h4 id="noticeTitle">Visual Novel Development</h4>
+                                <p id="noticeDesc">Working on the storyline and character art for Bon Bon's visual novel.</p>
+                                <div class="notice-list" id="noticeOthers">
+                                    <strong>Other Events:</strong><br>
+                                    • Comic Series Update<br>
+                                    • Character Design Batch
+                                </div>
+                            </div>
+                        </div>
+                        <div class="series-nav" id="seriesNav">
+                            <span class="series-arrow" onclick="prevSeries()">&lt;</span>
+                            <span class="series-arrow" onclick="nextSeries()">&gt;</span>
+                        </div>
+                    </div>
+                    
+                    <span class="notice-arrow notice-arrow-right" onclick="nextNotice()">&gt;</span>
+                </div>
+
+                <div class="notice-indicators" id="noticeIndicators"></div>
+                <div class="series-indicators" id="seriesIndicators"></div>
+            </div>
+
+            <div class="box">
+                <h3>FEATURED ARTWORKS</h3>
+
+                <div class="auto-gallery">
+                    <div class="auto-gallery-track" id="autoGalleryTrack">
+                        <img src="image/gallery/Leo.png" alt="Leo" data-title="Leo" data-description="A character from your gallery">
+                        <img src="image/gallery/Goldshi.png" alt="Goldshi" data-title="Goldshi" data-description="A character from your gallery">
+                        <img src="image/gallery/Steph.png" alt="Steph" data-title="Steph" data-description="A character from your gallery">
+                        <img src="image/gallery/Torch.png" alt="Torch" data-title="Torch" data-description="A character from your gallery" data-alt="image/gallery/Torch_Alt.PNG">
+                        <img src="image/gallery/Vixen.png" alt="Vixen" data-title="Vixen" data-description="A character from your gallery">
+                        <img src="image/gallery/Vance.png" alt="Vance" data-title="Vance" data-description="A character from your gallery" data-alt="image/gallery/Vance_Alt.PNG">
+                        <img src="image/gallery/Tiara.png" alt="Tiara" data-title="Tiara" data-description="A character from your gallery">
+                        <img src="image/gallery/Dino.png" alt="Dino" data-title="Dino" data-description="A character from your gallery">
+                        <img src="image/gallery/Lova.png" alt="Lova" data-title="Lova" data-description="A character from your gallery">
+                        <img src="image/gallery/Furry.png" alt="Furry" data-title="Furry" data-description="A character from your gallery">
+                        <img src="image/gallery/LovaPixel.png" alt="LovaPixel" data-title="LovaPixel" data-description="A character from your gallery">
+                    </div>
+                </div>
+            </div>
+
+            <div class="box box-projects">
+                <h3>CURRENT PROJECTS</h3>
+                <div class="project-item">
+                    <a href="Projects.html" onclick="playClickAudio()">
+                        <h2>BON BON'S GUIDE TO LOVE AND DEATH</h2>
+                        <p class="project-subtitle" style="color: #00A0FF;">A Visual Novel Adventure</p>
+                        <img src="image\ProjectBonBon.jpg" alt="Project Image">
+                        <p>Bon Bon's guide to love & death is a narrative driven visual novel centered on an exiled protagonist navigating relationships in a dying world. Exiled into a collapsing desert beneath towering moving cities, you wake up cursed, incomplete, and bound to a talking axe with questionable motives. The sky is counting down to an eclipse, the Carriers are on the move, and you have exactly fourteen days to decide what your life means before it ends.
+
+Each day you choose one character to spend time with, shaping relationships, uncovering secrets, and locking in consequences you cannot undo. You can form a full bond with only one soul, and trying to pursue everyone will lead to a guaranteed bad ending. With multiple endings ranging from romantic to tragic, Subterria blends time pressure, character driven storytelling, and dark humor into a visual novel about connection in a world that is already falling apart.</p>
+                    </a>
+                </div>
+                <div class="project-item">
+                    <a href="Projects.html#subterria" onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;">
+                        <h2>SUBTERRIA RISING</h2>
+                        <p class="project-subtitle" style="color: #00A0FF;">A Comic Series</p>
+                        <div class="project-images-side-by-side">
+                            <img src="image\OFNS_Comic1.png" alt="Subterria Rising Comic 1">
+                            <img src="image\OFNS_Comic2.png" alt="Subterria Rising Comic 2">
+                        </div>
+                        <p>This comic is a prologue to a larger science-fantasy narrative set in a desert world dominated by massive sentient carriers and scattered underground settlements. It follows Lova, a mercenary from a race believed to be extinct, during a self-contained job that takes place amid the Moon Harvest Festival. Tasked with hunting a legendary subterranean creature, the story presents everyday survival in the Subterria prior to the main events of the series. The project introduces the setting, social tensions, and the protagonist's role in the world without relying on knowledge of the broader plot.</p>
+                    </a>
+                </div>
+            </div>
+
+        </div> 
+
+        <div class="sidebar-right"> 
+            <div class="box"> 
+                <h3>SOCIALS</h3>
+
+                <div class="social-list">
+                    <a href="https://instagram.com" target="_blank" class="social-item instagram" onclick="playClickAudio()">
+                        <div class="icon-wrap">
+                            <img src="social/instagram.png" class="icon normal">
+                            <img src="social/instagramglow.png" class="icon glow">
+                        </div>
+                        <span>INSTAGRAM</span>
+                    </a>
+
+                    <a href="https://twitter.com" target="_blank" class="social-item twitter" onclick="playClickAudio()">
+                        <div class="icon-wrap">
+                            <img src="social/twitter.png" class="icon normal">
+                            <img src="social/twitterglow.png" class="icon glow">
+                        </div>
+                        <span>TWITTER</span>
+                    </a>
+
+                    <a href="https://tumblr.com" target="_blank" class="social-item tumblr" onclick="playClickAudio()">
+                        <div class="icon-wrap">
+                            <img src="social/tumblr.png" class="icon normal">
+                            <img src="social/tumblrglow.png" class="icon glow">
+                        </div>
+                        <span>TUMBLR</span>
+                    </a>
+
+                    <a href="https://ko-fi.com" target="_blank" class="social-item kofi" onclick="playClickAudio()">
+                        <div class="icon-wrap">
+                            <img src="social/kofi.png" class="icon normal">
+                            <img src="social/kofiglow.png" class="icon glow">
+                        </div>
+                        <span>KO-FI</span>
+                    </a>
+
+                    <a href="https://artfight.net" target="_blank" class="social-item artfight" onclick="playClickAudio()">
+                        <div class="icon-wrap">
+                            <img src="social/artfight.png" class="icon normal">
+                            <img src="social/artfightglow.png" class="icon glow">
+                        </div>
+                        <span>ARTFIGHT</span>
+                    </a>
+                </div>
+
+            </div> 
+        </div> 
+    </div> 
+    <div class="footer"></div> 
+    <div style="text-align: center; padding: 20px 10px; font-size: 0.8em; color: rgba(255, 255, 255, 0.6); margin-top: 20px;">
+        <p style="margin: 0;">Axelsitek © 2025 - All Rights Reserved.</p>
+    </div>
+</div>
+
+<!-- Lightbox Modal -->
+<div id="lightbox" class="lightbox">
+    <div class="lightbox-content">
+        <span class="lightbox-close">&times;</span>
+        <span class="lightbox-arrow lightbox-prev">&lt;</span>
+        <img id="lightbox-image" class="lightbox-image" src="" alt="">
+        <span class="lightbox-arrow lightbox-next">&gt;</span>
+        <button id="lightbox-toggle-alt" class="lightbox-toggle-alt" style="display: none;">View Alt</button>
+        <div class="lightbox-info">
+            <h3 id="lightbox-title"></h3>
+            <p id="lightbox-description"></p>
+        </div>
+    </div>
+</div>
+
+<script>
+// Notice Board Navigation
+const noticeEvents = [
+    {
+        img: "image/events/BONBONGIF.gif",
+        title: "Bon Bon's Adventure",
+        desc: "An exciting new adventure series featuring Bon Bon in unique scenarios.",
+        others: "• Animated Music Video Series"
+    },
+    {
+        img: "image/events/BLENDER1.png",
+        title: "Animated Music Video Series",
+        desc: "A 5-part animated music video series created in Blender.",
+        others: "• Bon Bon's Adventure",
+        series: ["image/events/BLENDER1.png", "image/events/BLENDER2.png", "image/events/BLENDER3.gif", "image/events/BLENDER5.gif", "image/events/BLENDER6.gif"],
+        seriesIndex: 0
+    }
+];
+
+let currentNoticeIndex = 0;
+
+function updateNoticeBoard() {
+    const event = noticeEvents[currentNoticeIndex];
+    const currentImg = event.series ? event.series[event.seriesIndex] : event.img;
+    document.getElementById("noticeImg").src = currentImg;
+    document.getElementById("noticeTitle").textContent = event.title;
+    document.getElementById("noticeDesc").textContent = event.desc;
+    document.getElementById("noticeOthers").innerHTML = `<strong>Other Events:</strong><br>${event.others}`;
+    
+    // Show/hide series navigation
+    const seriesNav = document.getElementById("seriesNav");
+    const seriesIndicators = document.getElementById("seriesIndicators");
+    if (event.series && event.series.length > 1) {
+        seriesNav.style.display = "flex";
+        seriesIndicators.style.display = "flex";
+        updateSeriesIndicators(event);
+        startSeriesAutoScroll();
+    } else {
+        seriesNav.style.display = "none";
+        seriesIndicators.style.display = "none";
+        if (seriesAutoScrollInterval) {
+            clearInterval(seriesAutoScrollInterval);
+            seriesAutoScrollInterval = null;
+        }
+    }
+    
+    // Update indicators
+    const indicators = document.querySelectorAll('.notice-dot');
+    indicators.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentNoticeIndex);
+    });
+}
+
+function nextSeries() {
+    const event = noticeEvents[currentNoticeIndex];
+    if (event.series) {
+        event.seriesIndex = (event.seriesIndex + 1) % event.series.length;
+        updateNoticeBoard();
+        // Restart auto-scroll after manual click
+        if (seriesAutoScrollInterval) clearInterval(seriesAutoScrollInterval);
+        startSeriesAutoScroll();
+    }
+}
+
+function prevSeries() {
+    const event = noticeEvents[currentNoticeIndex];
+    if (event.series) {
+        event.seriesIndex = (event.seriesIndex - 1 + event.series.length) % event.series.length;
+        updateNoticeBoard();
+        // Restart auto-scroll after manual click
+        if (seriesAutoScrollInterval) clearInterval(seriesAutoScrollInterval);
+        startSeriesAutoScroll();
+    }
+}
+
+function updateSeriesIndicators(event) {
+    const indicatorsContainer = document.getElementById("seriesIndicators");
+    indicatorsContainer.innerHTML = '';
+    if (event.series) {
+        event.series.forEach((_, index) => {
+            const dot = document.createElement('div');
+            dot.className = 'series-dot';
+            if (index === event.seriesIndex) dot.classList.add('active');
+            dot.onclick = () => {
+                event.seriesIndex = index;
+                updateNoticeBoard();
+            };
+            indicatorsContainer.appendChild(dot);
+        });
+    }
+}
+
+function nextNotice() {
+    currentNoticeIndex = (currentNoticeIndex + 1) % noticeEvents.length;
+    updateNoticeBoard();
+}
+
+function prevNotice() {
+    currentNoticeIndex = (currentNoticeIndex - 1 + noticeEvents.length) % noticeEvents.length;
+    updateNoticeBoard();
+}
+
+function initNoticeIndicators() {
+    const indicatorsContainer = document.getElementById('noticeIndicators');
+    noticeEvents.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.className = 'notice-dot';
+        if (index === 0) dot.classList.add('active');
+        dot.onclick = () => {
+            currentNoticeIndex = index;
+            updateNoticeBoard();
+            // Stop auto-scroll when manually clicking
+            if (seriesAutoScrollInterval) {
+                clearInterval(seriesAutoScrollInterval);
+                seriesAutoScrollInterval = null;
+            }
+        };
+        indicatorsContainer.appendChild(dot);
+    });
+}
+
+let seriesAutoScrollInterval = null;
+
+function startSeriesAutoScroll() {
+    const event = noticeEvents[currentNoticeIndex];
+    if (event.series && event.series.length > 1) {
+        if (seriesAutoScrollInterval) clearInterval(seriesAutoScrollInterval);
+        seriesAutoScrollInterval = setInterval(() => {
+            event.seriesIndex = (event.seriesIndex + 1) % event.series.length;
+            const currentImg = event.series[event.seriesIndex];
+            document.getElementById("noticeImg").src = currentImg;
+            updateSeriesIndicators(event);
+        }, 1500); // 1.5 seconds per image
+    }
+}
+
+window.onload = () => {
+    initNoticeIndicators();
+    updateNoticeBoard();
+    
+    // Duplicate gallery track for infinite scrolling
+    const track = document.getElementById("autoGalleryTrack");
+    track.innerHTML += track.innerHTML;
+    
+    // Gallery lightbox functionality
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightbox-image');
+    const lightboxTitle = document.getElementById('lightbox-title');
+    const lightboxDescription = document.getElementById('lightbox-description');
+    const closeBtn = document.querySelector('.lightbox-close');
+    const prevBtn = document.querySelector('.lightbox-prev');
+    const nextBtn = document.querySelector('.lightbox-next');
+    const toggleAltBtn = document.getElementById('lightbox-toggle-alt');
+    
+    let currentImageData = {};
+    let isShowingAlt = false;
+    let currentImageIndex = -1;
+    let allGalleryImages = [];
+    
+    // Get all gallery images
+    const galleryImages = document.querySelectorAll('.auto-gallery-track img');
+    
+    // Store unique images (before duplication)
+    galleryImages.forEach((img, index) => {
+        if (index < galleryImages.length / 2) {
+            allGalleryImages.push({
+                src: img.src,
+                title: img.dataset.title,
+                description: img.dataset.description,
+                alt: img.dataset.alt
+            });
+        }
+    });
+    
+    function openLightbox(imageData, index) {
+        const title = imageData.title;
+        const description = imageData.description;
+        const src = imageData.src;
+        const alt = imageData.alt;
+        
+        currentImageData = {
+            original: src,
+            alt: alt,
+            title: title,
+            description: description
+        };
+        currentImageIndex = index;
+        
+        isShowingAlt = false;
+        lightboxImage.src = src;
+        lightboxTitle.textContent = title;
+        lightboxDescription.textContent = description;
+        
+        // Show/hide alt button based on whether alt image exists
+        if (alt) {
+            toggleAltBtn.style.display = 'inline-block';
+            toggleAltBtn.textContent = 'View Alt';
+        } else {
+            toggleAltBtn.style.display = 'none';
+        }
+        
+        lightbox.classList.add('active');
+    }
+    
+    function navigateImage(direction) {
+        let newIndex = currentImageIndex + direction;
+        
+        // Wrap around
+        if (newIndex < 0) {
+            newIndex = allGalleryImages.length - 1;
+        } else if (newIndex >= allGalleryImages.length) {
+            newIndex = 0;
+        }
+        
+        openLightbox(allGalleryImages[newIndex], newIndex);
+    }
+    
+    galleryImages.forEach((img, index) => {
+        if (index < allGalleryImages.length) {
+            img.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openLightbox(allGalleryImages[index], index);
+            });
+        }
+    });
+    
+    // Navigate with arrow buttons
+    prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navigateImage(-1);
+    });
+    
+    nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navigateImage(1);
+    });
+    
+    // Toggle between original and alt image
+    toggleAltBtn.addEventListener('click', () => {
+        isShowingAlt = !isShowingAlt;
+        if (isShowingAlt) {
+            lightboxImage.src = currentImageData.alt;
+            toggleAltBtn.textContent = 'View Original';
+        } else {
+            lightboxImage.src = currentImageData.original;
+            toggleAltBtn.textContent = 'View Alt';
+        }
+    });
+    
+    // Close lightbox
+    closeBtn.addEventListener('click', () => {
+        lightbox.classList.remove('active');
+    });
+    
+    // Close when clicking outside the image
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+            lightbox.classList.remove('active');
+        }
+    });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (lightbox.classList.contains('active')) {
+            if (e.key === 'ArrowLeft') {
+                navigateImage(-1);
+            } else if (e.key === 'ArrowRight') {
+                navigateImage(1);
+            } else if (e.key === 'Escape') {
+                lightbox.classList.remove('active');
+            }
+        }
+    });
+};
+</script>
+
+<!-- Sound Effects -->
+<audio id="clickSound" src="audio/sifi click 2.wav" preload="auto"></audio>
+
+<script>
+  function playClickAudio() {
+    const clickAudio = document.getElementById('clickSound');
+    clickAudio.currentTime = 0;
+    clickAudio.play().catch(()=>{});    
+  }
+
+  function playAudioBeforeRedirect(url) {
+    const clickAudio = document.getElementById('clickSound');
+    clickAudio.currentTime = 0;
+    clickAudio.play();
+    setTimeout(() => {
+      window.location.href = url;
+    }, 500);
+  }
+</script>
+<script src="script.js"></script>
+
+</body>
+</html>

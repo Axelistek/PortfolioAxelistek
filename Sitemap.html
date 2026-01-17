@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Site Map</title>
+<style>
+/*** VCR OSD Mono Font ***/
+@font-face {
+    font-family: 'VCR_OSD_Mono';
+    src: url('font/VCR_OSD_MONO_1.001.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*** FAKE WINDOWS CSS (WITH VCR FONT) ***/
+body { 
+    background-image: url("image/Pozadina.png"); 
+    background-size: cover;      
+    background-repeat: no-repeat; 
+    background-position: center;  
+    background-attachment: fixed; 
+    font-family: 'VCR_OSD_Mono', monospace;
+    font-size: 0.875em;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+} 
+
+center { text-align: center; } 
+
+/* Make all text white */
+#wrapper, #wrapper * {
+    color: white;
+}
+
+/* Flicker Effect */
+@keyframes flicker {
+0% {opacity: 0.27861;}
+5% {opacity: 0.34769;}
+10% {opacity: 0.23604;}
+15% {opacity: 0.90626;}
+20% {opacity: 0.18128;}
+25% {opacity: 0.83891;}
+30% {opacity: 0.65583;}
+35% {opacity: 0.67807;}
+40% {opacity: 0.26559;}
+45% {opacity: 0.84693;}
+50% {opacity: 0.96019;}
+55% {opacity: 0.08594;}
+60% {opacity: 0.20313;}
+65% {opacity: 0.71988;}
+70% {opacity: 0.53455;}
+75% {opacity: 0.37288;}
+80% {opacity: 0.71428;}
+85% {opacity: 0.70419;}
+90% {opacity: 0.7003;}
+95% {opacity: 0.36108;}
+100% {opacity: 0.24387;}
+}
+
+#wrapper::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(18, 16, 16, 0.1);
+    opacity: 0;
+    z-index: 2;
+    pointer-events: none;
+    animation: flicker 0.15s infinite;
+}
+
+#wrapper::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 2;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+}
+
+/* WRAPPER */
+#wrapper { 
+    width: 1150px;
+    height: min-content;
+    min-height: 800px;  
+    background: rgba(0, 0, 0, 0.3);
+    margin: 0 auto; 
+    margin-top: 0px; 
+    padding-bottom: 90px; 
+    position: relative; 
+    z-index: 1;
+} 
+
+.wrapper-2 { 
+    position: relative; 
+    min-height: 800px; 
+} 
+
+.header { 
+    text-align: center; 
+    padding: 0px 0; 
+} 
+.header img { 
+    width: 400%; 
+    max-width: 1150px; 
+    height: 250px; 
+} 
+
+.footer { height: 10px; } 
+.title { padding: 15px 10px 10px 20px; } 
+.title h1 { padding: 0; margin: 0; } 
+
+/* Links as image buttons */
+.links {
+    padding: 5px; 
+    text-align: center;
+}
+
+.link-home { margin: 0 35px; display: inline-block; }
+.link-gallery { margin: 0 20px; display: inline-block; }
+.link-projects { margin: 0 30px; display: inline-block; }
+.link-contact { margin: 0 15px; display: inline-block; }
+
+.btn-home { width: 70px; height: auto; }
+.btn-gallery { width: 100px; height: auto; }
+.btn-projects { width: 110px; height: auto; }
+.btn-contact { width: 100px; height: auto; }
+
+.btn-home:hover { content: url("image/buttons/Home_ButtonClick.png"); }
+.btn-gallery:hover { content: url("image/buttons/GalleryClick_Button.png"); }
+.btn-projects:hover { content: url("image/buttons/ProjectsClick_Button.png"); }
+.btn-contact:hover { content: url("image/buttons/ContactClick_Button.png"); }
+
+.main { margin-left: 20px; margin-right: 20px; width: auto; } 
+
+.box { 
+    padding: 15px 20px; 
+    background: url("image/SquaresBackround.png"); 
+    background-size: cover; 
+    background-position: center;
+    color: white;          
+    margin: 0 0 20px 0; 
+    border: none;          
+}
+
+.box h1,
+.box h2,
+.box h3,
+.box p { opacity: 0.9; line-height: 1.4; }
+
+.box h1 {
+    margin-top: 0;
+    font-size: 2em;
+}
+
+.box h2 {
+    font-size: 1.5em;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.box a {
+    color: #00A0FF;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.box a:hover {
+    text-decoration: underline;
+    color: #66D9FF;
+}
+
+.sitemap-section {
+    margin-bottom: 20px;
+}
+
+.sitemap-list {
+    list-style: none;
+    padding-left: 20px;
+    margin: 10px 0;
+}
+
+.sitemap-list li {
+    margin: 8px 0;
+    padding: 5px 0;
+    border-left: 3px solid #00A0FF;
+    padding-left: 15px;
+}
+
+.sitemap-list a {
+    color: #00A0FF;
+    text-decoration: none;
+}
+
+.sitemap-list a:hover {
+    color: #66D9FF;
+    text-decoration: underline;
+}
+
+@media(max-width:1180px) { 
+    #wrapper { width: calc(440px + 50vw); } 
+    .main { width: 50vw; } 
+} 
+@media(max-width:910px) { 
+    #wrapper { width: calc(360px + 52vw); } 
+    .main { margin-left: 20px; margin-right: 20px; width: 52vw; } 
+} 
+@media(orientation:portrait) { 
+    #wrapper { width: 96vw; } 
+    .wrapper-2 { width: 94vw; } 
+    .main { position: relative; width: 92vw; margin: 0.25rem 1vw; } 
+} 
+</style>
+</head>
+<body>
+
+<!-- Background Music -->
+<audio id="bg-music" autoplay loop style="display:none;">
+  <source src="audio/songback.mp3" type="audio/mpeg">
+</audio>
+<script>
+const audio = document.getElementById('bg-music');
+audio.volume = 0.2;
+</script>
+
+<div id="wrapper"> 
+    <div class="header"> 
+        <img src="image/banner.gif" alt="Banner"> 
+    </div> 
+    <div class="title"><h1></h1></div> 
+
+    <div class="links">
+        <div class="link-home"><a href="home.html" onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;"><img src="image/buttons/Home_Button.png" alt="Home" class="btn-home"></a></div>
+        <div class="link-gallery"><a href="Gallery.html" onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;"><img src="image/buttons/Gallery_Button.png" alt="Gallery" class="btn-gallery"></a></div>
+        <div class="link-projects"><a href="Projects.html" onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;"><img src="image/buttons/Projects_Button.png" alt="Projects" class="btn-projects"></a></div>
+        <div class="link-contact"><a href="Contact.html" onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;"><img src="image/buttons/Contact_Button.png" alt="Contact" class="btn-contact"></a></div>
+    </div>
+
+    <div class="wrapper-2"> 
+        <div class="main"> 
+            <div class="box">
+                <h1>SITE MAP</h1>
+                <p>Welcome to the site map. Below you'll find all the main sections and content available on this website.</p>
+                
+                <div class="sitemap-section">
+                    <h2>Main Pages</h2>
+                    <ul class="sitemap-list">
+                        <li><a href="Home.html" onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;">Home</a> - Main page with introduction and featured artwork</li>
+                        <li><a href="Gallery.html" onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;">Gallery</a> - Browse character artwork and illustrations</li>
+                        <li><a href="Projects.html" onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;">Projects</a> - View my creative projects and works</li>
+                        <li><a href="Contact.html" onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;">Contact</a> - Get in touch with me</li>
+                        <li><a href="Characters.html" onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;">Characters</a> - Meet the characters from my projects</li>
+                    </ul>
+                </div>
+
+                <div class="sitemap-section">
+                    <h2>Special Pages</h2>
+                    <ul class="sitemap-list">
+                        <li><a href="Sitemap.html" onclick="playClickAudio();">Site Map</a> - You are here. Navigation guide for the website</li>
+                        <li><a href="Commissions.html" onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;">Commissions</a> - Information about commissioning artwork</li>
+                    </ul>
+                </div>
+
+                <div class="sitemap-section">
+                    <h2>Featured Projects</h2>
+                    <ul class="sitemap-list">
+                        <li><a href="Projects.html" onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;">Bon Bon's Guide to Love and Death</a> - A visual novel adventure</li>
+                        <li><a href="Projects.html#subterria" onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;">Subterria Rising</a> - A comic series</li>
+                    </ul>
+                </div>
+
+                <div class="sitemap-section">
+                    <h2>Additional Info</h2>
+                    <p>This website is a showcase of my creative work, including artwork, game projects, and various illustrations. Feel free to explore all sections and don't hesitate to reach out if you're interested in commissions or collaboration!</p>
+                </div>
+            </div>
+        </div> 
+    </div> 
+    <div class="footer"></div> 
+</div>
+
+<!-- Sound Effects -->
+<audio id="clickSound" src="audio/sifi click 2.wav" preload="auto"></audio>
+
+<script>
+  function playClickAudio() {
+    const clickAudio = document.getElementById('clickSound');
+    clickAudio.currentTime = 0;
+    clickAudio.play().catch(()=>{});    
+  }
+
+  function playAudioBeforeRedirect(url) {
+    const clickAudio = document.getElementById('clickSound');
+    clickAudio.currentTime = 0;
+    clickAudio.play();
+    setTimeout(() => {
+      window.location.href = url;
+    }, 500);
+  }
+</script>
+
+</body>
+</html>

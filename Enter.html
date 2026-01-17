@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>AXEL PORTFOLIO</title>
+
+<!-- Preload the background video -->
+<link rel="preload" as="video" href="https://files.catbox.moe/itx6sl.webm" type="video/webm">
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    font-family: 'RaceSport', sans-serif;
+    overflow: hidden;
+    background-color: black; /* fallback background to prevent white flash */
+  }
+
+  @font-face {
+    font-family: 'RaceSport';
+    src: url('RaceSport.ttf') format('truetype');
+  }
+
+  /* Background video */
+  .video-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 0; /* behind all elements */
+    background-color: black; /* ensures black behind video */
+    overflow: hidden;
+  }
+
+  .top-gif {
+    width: 90%;           /* scaled down slightly */
+    height: auto;
+    max-height: 90%;
+    object-fit: contain;    /* fills container without stretching */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Buttons */
+  .button-container {
+    position: absolute;
+    left: 22%;
+    bottom: 20%;
+    z-index: 1000;
+    display: flex;
+    gap: 70px;
+  }
+
+  .menu-button {
+    width: 180px;
+    transition: transform 0.25s ease;
+  }
+
+  .menu-button:hover {
+    transform: scale(1.15);
+  }
+
+  /* Slider */
+  .slider-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    background: rgba(3,0,46,0.7); 
+    border: 4px solid rgba(255,255,255,0.3);
+    border-radius: 8px;
+    z-index: 2000; /* above video */
+  }
+
+  .slider {
+    display: inline-block;
+    animation: slide 15s linear infinite;
+    padding-left: 100%;
+  }
+
+  .slider span {
+    margin-right: 2em;
+    color: white;
+    font-size: 1.2em;
+    font-family: monospace;
+  }
+
+  @keyframes slide {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-100%); }
+  }
+
+  /* Cursor */
+  * {
+    cursor: url(https://cur.cursors-4u.net/cursors/cur-2/cur116.cur), auto !important;
+  }
+</style>
+</head>
+<body>
+
+<!-- Background video -->
+<div class="video-wrapper">
+  <video class="top-gif" autoplay loop muted playsinline preload="auto">
+    <source src="https://files.catbox.moe/itx6sl.webm" type="video/webm">
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+<!-- Buttons -->
+<div class="button-container">
+  <a href="Home.html" 
+     onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;" 
+     onmouseover="playHoverAudio();">
+    <img src="image/buttoneffectenter.png" class="menu-button" alt="Home">
+  </a>
+
+  <a href="AnotherPage.html" 
+     onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;" 
+     onmouseover="playHoverAudio();">
+    <img src="image/buttoneffectbye.png" class="menu-button" alt="Another Page">
+  </a>
+</div>
+
+<!-- Slider -->
+<div class="slider-wrapper">
+  <div class="slider">
+    <span>NOT MADE FOR MOBILE SCREENS (FOR NOW) • </span>
+    <span>UNDER CONSTRUCTION • </span>
+    <span>NOT MADE FOR MOBILE SCREENS (FOR NOW) • </span>
+    <span>UNDER CONSTRUCTION • </span>
+  </div>
+</div>
+
+<!-- RoguePebble-style hover and click audio -->
+<audio id="hoverSound" src="audio\zoom.wav" preload="auto"></audio>
+<audio id="clickSound" src="audio\sifi click 2.wav" preload="auto"></audio>
+
+<script>
+  function playHoverAudio() {
+    const hoverAudio = document.getElementById('hoverSound');
+    hoverAudio.currentTime = 0; 
+    hoverAudio.play().catch(()=>{});          
+  }
+
+  function playClickAudio() {
+    const clickAudio = document.getElementById('clickSound');
+    clickAudio.currentTime = 0;
+    clickAudio.play().catch(()=>{});    
+  }
+
+  function playAudioBeforeRedirect(url) {
+    const clickAudio = document.getElementById('clickSound');
+    clickAudio.play();
+    setTimeout(() => {
+      window.location.href = url;
+    }, 500); // delay to let click sound play
+  }
+</script>
+
+</body>
+</html>

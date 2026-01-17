@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>OFNS Projects</title>
+<style>
+/*** VCR OSD Mono Font ***/
+@font-face {
+    font-family: 'VCR_OSD_Mono';
+    src: url('font/VCR_OSD_MONO_1.001.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*** FAKE WINDOWS CSS (WITH VCR FONT) ***/
+body { 
+    background-image: url("image/Pozadina.png"); 
+    background-size: cover;      
+    background-repeat: no-repeat; 
+    background-position: center;  
+    background-attachment: fixed; 
+    font-family: 'VCR_OSD_Mono', monospace;
+    font-size: 0.875em;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+} 
+
+center { text-align: center; } 
+
+/* Make all text white */
+#wrapper, #wrapper * {
+    color: white;
+}
+
+/* Flicker Effect */
+@keyframes flicker {
+0% {opacity: 0.27861;}
+5% {opacity: 0.34769;}
+10% {opacity: 0.23604;}
+15% {opacity: 0.90626;}
+20% {opacity: 0.18128;}
+25% {opacity: 0.83891;}
+30% {opacity: 0.65583;}
+35% {opacity: 0.67807;}
+40% {opacity: 0.26559;}
+45% {opacity: 0.84693;}
+50% {opacity: 0.96019;}
+55% {opacity: 0.08594;}
+60% {opacity: 0.20313;}
+65% {opacity: 0.71988;}
+70% {opacity: 0.53455;}
+75% {opacity: 0.37288;}
+80% {opacity: 0.71428;}
+85% {opacity: 0.70419;}
+90% {opacity: 0.7003;}
+95% {opacity: 0.36108;}
+100% {opacity: 0.24387;}
+}
+
+#wrapper::after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(18, 16, 16, 0.1);
+    opacity: 0;
+    z-index: 2;
+    pointer-events: none;
+    animation: flicker 0.15s infinite;
+}
+
+#wrapper::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 2;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+}
+
+/* WRAPPER */
+#wrapper { 
+    width: 1150px;
+    height: min-content;
+    min-height: 800px;  
+    background: rgba(0, 0, 0, 0.3);
+    margin: 0 auto; 
+    margin-top: 0px; 
+    padding-bottom: 90px; 
+    position: relative; 
+    z-index: 1;
+} 
+
+.wrapper-2 { 
+    position: relative; 
+    min-height: 800px; 
+} 
+
+.header { 
+    text-align: center; 
+    padding: 0px 0;
+    margin-left: 0;
+} 
+.header img { 
+    width: calc(100% - 20px); 
+    height: auto;
+    max-height: 150px;
+    max-width: 1180px;
+    padding: 0 10px;
+} 
+
+.footer { height: 10px; } 
+.title { padding: 15px 10px 10px 20px; } 
+.title h1 { padding: 0; margin: 0; } 
+
+/* Links as image buttons */
+.links {
+    padding: 5px; 
+    text-align: center;
+}
+
+.link-home { margin: 0 35px; display: inline-block; }
+.link-gallery { margin: 0 20px; display: inline-block; }
+.link-projects { margin: 0 30px; display: inline-block; }
+.link-contact { margin: 0 15px; display: inline-block; }
+
+.btn-home { width: 70px; height: auto; }
+.btn-gallery { width: 100px; height: auto; }
+.btn-projects { width: 110px; height: auto; }
+.btn-contact { width: 100px; height: auto; }
+
+.btn-home:hover { content: url("image/buttons/Home_ButtonClick.png"); }
+.btn-gallery:hover { content: url("image/buttons/GalleryClick_Button.png"); }
+.btn-projects:hover { content: url("image/buttons/ProjectsClick_Button.png"); }
+.btn-contact:hover { content: url("image/buttons/ContactClick_Button.png"); }
+
+.sidebar-left { width: 200px; position: absolute; top: 0; left: 10px; } 
+.sidebar-right { width: 250px; position: absolute; top: 0; right: 10px; }
+
+/* ⭐ ALIGN ALL TOP BOXES ⭐ */
+.sidebar-left .box,
+.sidebar-right .box {
+    height: auto;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+.main { margin-left: 220px; margin-right: 0; width: calc(100% - 220px); } 
+
+.box { 
+    padding: 5px 10px; 
+    background: url("image/SquaresBackround.png"); 
+    background-size: cover; 
+    background-position: center;
+    color: white;          
+    margin: 10px 0 15px; 
+    border: none;          
+}
+
+.main .box {
+    background: url("image/PozadinaVerticalLong.png");
+    background-size: cover;
+    background-position: center;
+}
+
+.box h1,
+.box h2,
+.box h3,
+.box p { opacity: 0.9; }
+
+.box img { max-width: 100%; height: auto; } 
+
+/* Navigation Links */
+.nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.nav-item {
+    color: white;
+    text-decoration: none;
+    padding: 8px 0;
+    cursor: pointer;
+    transition: color 0.2s, transform 0.2s;
+    font-size: 0.95em;
+    font-weight: bold;
+}
+
+/* Character Card Hover Effect */
+.character-card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    border: 2px solid white;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.character-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.character-info {
+    position: absolute;
+    top: 0;
+    right: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    padding: 15px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    transition: right 0.4s ease;
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+.character-card:hover .character-info {
+    right: 0;
+}
+
+.character-info h4 {
+    margin: 0 0 10px 0;
+    font-size: 1.1em;
+    color: #00A0FF;
+}
+
+.character-info p {
+    margin: 5px 0;
+}
+
+.character-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4em;
+    color: #00A0FF;
+    font-weight: bold;
+}
+
+.nav-item:hover {
+    color: #90EE90;
+    transform: translateX(5px);
+    text-shadow: 0 0 10px rgba(0, 150, 255, 0.8);
+}
+
+.nav-item.expandable::after {
+    content: ' ▼';
+    transition: transform 0.3s;
+}
+
+.nav-item.expandable.expanded::after {
+    transform: rotate(180deg);
+}
+
+.nav-submenu {
+    display: none;
+    flex-direction: column;
+    gap: 8px;
+    margin-left: 15px;
+    margin-top: 8px;
+    padding-left: 0;
+}
+
+.nav-submenu.show {
+    display: flex;
+}
+
+.nav-submenu a,
+.nav-submenu span {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    padding: 5px 0 5px 20px;
+    cursor: pointer;
+    transition: color 0.2s;
+    font-size: 0.85em;
+    position: relative;
+}
+
+.nav-submenu a::before,
+.nav-submenu span::before {
+    content: '\25B6';
+    position: absolute;
+    left: 0;
+    font-size: 0.7em;
+}
+
+.nav-submenu a:hover,
+.nav-submenu span:hover {
+    color: #90EE90;
+}
+
+/* NEW NAVIGATION STYLES */
+/* Jump To Navigation Box */
+.jump-to-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0;
+    align-items: center;
+}
+
+.jump-to-label {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.jump-to-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 70%;
+    max-width: 140px;
+}
+
+.jump-to-link {
+    color: white;
+    text-decoration: none;
+    padding: 12px 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 1.1em;
+    font-weight: bold;
+    border: 2px solid white;
+    border-radius: 8px;
+    display: block;
+    text-align: center;
+    background: transparent;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.jump-to-link:hover {
+    color: #00A0FF;
+    border-color: #00A0FF;
+    text-shadow: 0 0 10px rgba(0, 150, 255, 0.8);
+    transform: scale(1.02);
+}
+
+/* Jump Back Navigation Box */
+.jump-back-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0;
+    align-items: center;
+}
+
+.jump-back-label {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.jump-back-items {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+}
+
+.jump-back-item {
+    color: white;
+    text-decoration: none;
+    padding: 12px 0;
+    cursor: pointer;
+    transition: color 0.2s, transform 0.2s;
+    font-size: 1.05em;
+    font-weight: bold;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+.jump-back-item::before {
+    content: '→';
+    margin-right: 12px;
+    font-size: 0.9em;
+}
+
+.jump-back-item:hover {
+    color: #00A0FF;
+    text-shadow: 0 0 10px rgba(0, 150, 255, 0.8);
+    transform: translateX(5px);
+}
+
+.jump-back-item.expandable::after {
+    content: '→';
+    font-size: 0.8em;
+    transition: transform 0.3s;
+}
+
+.jump-back-item.expandable.expanded::after {
+    transform: rotate(90deg);
+}
+
+.jump-back-submenu {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    margin-left: 20px;
+    margin-top: 4px;
+    padding-left: 0;
+}
+
+.jump-back-submenu.show {
+    display: flex;
+}
+
+.jump-back-submenu a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    padding: 4px 0;
+    cursor: pointer;
+    transition: color 0.2s;
+    font-size: 0.85em;
+}
+
+.jump-back-submenu a:hover {
+    color: #90EE90;
+}
+
+/* Content Section */
+.content-section {
+    margin-bottom: 30px;
+    display: none;
+}
+
+.content-section.active {
+    display: block;
+}
+
+.comic-btn:hover {
+    background: rgba(0, 160, 255, 0.6) !important;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 160, 255, 0.7);
+}
+
+/* Comic Book Flip Animation - Only Right Page Flips */
+@keyframes flipPageRight {
+    0% {
+        transform: rotateY(0deg);
+    }
+    100% {
+        transform: rotateY(-180deg);
+    }
+}
+
+@keyframes flipPageLeft {
+    0% {
+        transform: rotateY(0deg);
+    }
+    100% {
+        transform: rotateY(180deg);
+    }
+}
+
+.comic-book {
+    perspective: 1000px;
+}
+
+.page-container {
+    position: relative;
+    width: 100%;
+    height: 550px;
+    perspective: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.book-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 800px;
+    margin: 0 auto;
+    gap: 0;
+}
+
+.page {
+    width: 400px;
+    height: 550px;
+    background: white;
+    border: 3px solid #00A0FF;
+    box-shadow: 0 0 20px rgba(0, 160, 255, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.page img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.page-left {
+    border-radius: 4px 0 0 4px;
+}
+
+.page-right {
+    border-radius: 0 4px 4px 0;
+}
+
+.page-cover {
+    border-radius: 4px 0 0 4px;
+}
+
+.page-flipper {
+    perspective: 1000px;
+    width: 800px;
+    height: 550px;
+    position: relative;
+    display: flex;
+    gap: 0;
+}
+
+.page-right.flip {
+    animation: flipPageRight 0.8s ease-in-out forwards;
+    transform-origin: left center;
+}
+
+.page-flipper.flip-right .page-right {
+    animation: flipPageRight 0.8s ease-in-out forwards;
+    transform-origin: left center;
+}
+
+.page-flipper.flip-left .page-right {
+    animation: flipPageLeft 0.8s ease-in-out forwards;
+    transform-origin: left center;
+}
+
+.content-section h2 {
+    margin: 20px 0 15px 0;
+    font-size: 1.8em;
+    border-bottom: 2px solid white;
+    padding-bottom: 10px;
+}
+
+.content-section p {
+    line-height: 1.4;
+    margin: 5px 0;
+    text-align: center;
+}
+
+.content-section h3 {
+    text-align: center;
+    margin: 10px 0 8px 0;
+}
+
+.project-banner-image {
+    max-width: 70%;
+    height: auto;
+    border: 2px solid white;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.romanticable-characters {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin: 15px 0 30px 0;
+}
+
+.romanticable-characters img {
+    max-width: 100%;
+    height: auto;
+    border: 2px solid white;
+    border-radius: 4px;
+}
+
+</style>
+</head>
+<body>
+
+<div id="wrapper"> 
+    <div class="header"> 
+        <img src="image\Bannerslim.gif" alt="Banner"> 
+    </div> 
+    <div class="title"><h1></h1></div> 
+
+    <div class="links">
+    </div>
+
+    <div class="wrapper-2"> 
+        <div class="sidebar-left"> 
+            <!-- Jump To Box -->
+            <div class="box">
+                <div class="jump-to-box">
+                    <div class="jump-to-label">JUMP TO...</div>
+                    <div class="jump-to-links">
+                        <a href="#bon" class="jump-to-link">BON BONS</a>
+                        <a href="#subterria" class="jump-to-link">SUBTERRIA RISING</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jump Back Box -->
+            <div class="box">
+                <div class="jump-back-box">
+                    <div class="jump-back-label">BACK TO..</div>
+                    <div class="jump-back-items">
+                        <a href="Home.html" class="jump-back-item" onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;">HOME</a>
+                        <a href="Gallery.html" class="jump-back-item" onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;">GALLERY</a>
+                        <a href="Characters.html" class="jump-back-item" onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;">CHARACTERS</a>
+                        <a href="Contact.html" class="jump-back-item" onclick="playClickAudio(); playAudioBeforeRedirect(this.href); return false;">CONTACT</a>
+                    </div>
+                </div>
+            </div>
+        </div> 
+
+        <div class="main"> 
+            <div class="box">
+                <h1 style="margin: 0 0 20px 0; font-size: 2.5em; padding: 0;">PROJECTS</h1>
+                
+                <!-- Bon Bons Project -->
+                <section id="bon" class="content-section">
+                    <h2 style="margin: 20px 0 15px 0; font-size: 1.8em; border-bottom: 2px solid white; padding-bottom: 10px;">BON BONS GUIDE TO DEATH AND LOVE</h2>
+                    <div style="margin: 20px 0; text-align: center;">
+                        <img src="image/ProjectBonBon.jpg" alt="Bon Bons" class="project-banner-image">
+                    </div>
+                    <h3 style="font-size: 1.3em; color: #00A0FF; margin: 15px 0 10px 0;">A Dating Visual Novel</h3>
+                    
+                    <h3 style="font-size: 1.2em; color: #00A0FF; margin: 20px 0 10px 0;">Gameplay Mechanics:</h3>
+                    <p>
+                        <strong>Timed day cycle (14 days until apocalypse):</strong> Each day you choose 1 character to spend time with.<br><br>
+                        <strong>Affection meter + decision impact:</strong> Choices unlock new scenes, endings, or death.<br><br>
+                        <strong>Multiple endings:</strong> Romantic, platonic, tragic, funny, or cursed<br><br>
+                        <strong>One guaranteed "bad end"</strong> if you try to romance everyone (Bon-Bon carves out your heart)<br><br>
+                        You start the game with only half a heart. Build relationships and earn Heart Points by connecting with characters across the world. If you earn enough, half of their heart will fuse with yours, completing your own.<br><br>
+                        <strong>You can only fully bond with one soul. Choose carefully.</strong>
+                    </p>
+                    
+                    <h3 style="font-size: 1.2em; color: #00A0FF; margin: 20px 0 10px 0;">Romanticable Characters</h3>
+                    <div class="romanticable-characters">
+                        <div class="character-card">
+                            <img src="image/Projects/ch_3.PNG" alt="Vance Bloodhound">
+                            <div class="character-info">
+                                <h4>VANCE BLOODHOUND</h4>
+                                <p><strong>Difficulty:</strong> ☆ ☆</p>
+                                <p><strong>Type:</strong> Underground Rockstar / Grief Baggage / Secret Softie</p>
+                                <p><strong>Loves:</strong> Cigarettes, riding fast, fighting injustice, his bandmates, loyalty</p>
+                                <p><strong>Route Mood:</strong> Deadpan teasing → mutual protection → emotional jailbreak</p>
+                                <p style="margin-top: 10px;">Vance isn't looking for love, he's looking for revenge. But there's something in the way you don't flinch around him. His route includes bar fights, a duet performance, and maybe… a hand on his scars he never lets anyone touch.</p>
+                            </div>
+                        </div>
+                        <div class="character-card">
+                            <img src="image/Projects/ch_4.PNG" alt="Steph Sprinklefarts">
+                            <div class="character-info">
+                                <h4>STEPH SPRINKLEFARTS</h4>
+                                <p><strong>Difficulty:</strong> ☆</p>
+                                <p><strong>Type:</strong> Mute Songbird / Baby Sweetheart</p>
+                                <p><strong>Loves:</strong> Singing, Cockatoos, Starry nights, Drawing, Making bracelets for people, The band that saved her</p>
+                                <p><strong>Route Mood:</strong> Warm + Healing + Innocent</p>
+                                <p style="margin-top: 10px;">Steph's route is a musical bond. You'll earn her affection by learning her rhythms both literal and emotional. It's a gentle route full of shared silences, humming duets, and a final stage performance under the dying sky.</p>
+                            </div>
+                        </div>
+                        <div class="character-card">
+                            <img src="image/Projects/ch_5.PNG" alt="Adrik Torch Volkov">
+                            <div class="character-info">
+                                <h4>ADRIK "TORCH" VOLKOV</h4>
+                                <p><strong>Difficulty:</strong> ☆ ☆ ☆ ☆ ☆ (Hell Mode™)</p>
+                                <p><strong>Type:</strong> Repressed Dadcore / Desert Cryptid / Built like a tragedy</p>
+                                <p><strong>Loves:</strong> Quiet solitude, his adopted daughter Lova, old love letters, fighting for an end to the cycle of violence</p>
+                                <p><strong>Route Mood:</strong> Cold detachment → subtle protection → inevitable heartbreak</p>
+                                <p style="margin-top: 10px;">Torch doesn't want to be loved. In fact, he'll go out of his way to make sure you don't. He keeps people at a distance because he believes he's dangerous, and he's not wrong. Haunted by a parasitic twin, emotionally carved up by guilt, Torch hides in the desert not just to protect others, but to make sure no one ever tries to save him.</p>
+                            </div>
+                        </div>
+                        <div class="character-card">
+                            <img src="image/Projects/ch_6.PNG" alt="V1X3N Blazeclaw" style="object-fit: contain;">
+                            <div class="character-info">
+                                <h4>V1X3N BLAZECLAW</h4>
+                                <p><strong>Difficulty:</strong> ☆ ☆</p>
+                                <p><strong>Type:</strong> Glam Punk Disaster / Attention Needer</p>
+                                <p><strong>Loves:</strong> Late-night jam sessions, raw honest music, (my head is exploding wait)</p>
+                                <p><strong>Route Mood:</strong> Party mess → heart-to-heart → self-worth</p>
+                                <p style="margin-top: 10px;">Vixen lives like the world's a stage. Loud, glittering, impossible to ignore. He plays the asshole sometimes, convinced people only want him for his money or his body, but that bravado hides someone insecure and a little too easy to fool. Behind the eyeliner and chaos is a kid terrified of being left alone. His route includes reckless nights, unguarded confessions, and the slow realization that he doesn't need an audience to matter.</p>
+                            </div>
+                        </div>
+                        <div class="character-card">
+                            <img src="image/Projects/ch_2.PNG" alt="Lenor Callown" style="object-fit: cover;">
+                            <div class="character-info">
+                                <h4>LENOR CALLOWN</h4>
+                                <p><strong>Difficulty:</strong> ☆☆☆☆☆</p>
+                                <p><strong>Type:</strong> Divine Executioner / Haunted Gunslinger</p>
+                                <p><strong>Loves:</strong> Quiet chapels at dawn, well-oiled revolvers, cigars</p>
+                                <p><strong>Route Mood:</strong> Relentless violence → wary alliance → smoldering, forbidden romance</p>
+                                <p style="margin-top: 10px;">Lenor is a man you should never stand too close to. Death follows wherever he goes. Balanced between prayer and bloodshed, he's feared by all, trusted by none. Yet in his silence lingers a hunger, a glance heavier than a bullet, firelight holding too long on his eyes. Love with Lenor isn't safe. It's a risk, temptation, and inevitable surrender.</p>
+                            </div>
+                        </div>
+                        <div class="character-card character-placeholder">
+                            ?
+                            <div class="character-info">
+                                <h4>???</h4>
+                                <p>Character to be revealed...</p>
+                            </div>
+                        </div>
+                        <div class="character-card">
+                            <img src="image/Projects/ch_1.PNG" alt="Character 1" style="object-fit: cover;">
+                            <div class="character-info">
+                                <h4>???</h4>
+                                <p>Character to be revealed...</p>
+                            </div>
+                        </div>
+                        <div class="character-card character-placeholder">
+                            ?
+                            <div class="character-info">
+                                <h4>???</h4>
+                                <p>Character to be revealed...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h3 style="font-size: 1.2em; color: #00A0FF; margin: 20px 0 10px 0;">BON-BON (GUIDE CHARACTER)</h3>
+                    <p style="text-align: center; line-height: 1.6; margin: 15px 0;">
+                        Bon-Bon is your unwanted spiritual advisor, former murder weapon, and now self-proclaimed "Love Consultant of the Wastes." He guides the player through the game, offers commentary (mostly unhelpful), and occasionally unlocks hidden lore….often by accident.
+                    </p>
+                    
+                    <p style="text-align: center; font-weight: bold; color: #00A0FF; margin: 15px 0 10px 0;">Personality</p>
+                    <p style="text-align: center; line-height: 1.6; margin: 10px 0;">
+                        Sarcastic, dramatic, emotionally avoidant<br>
+                        Obsessed with being perceived as "cool" despite being a talking axe
+                    </p>
+                    
+                    <p style="text-align: center; font-weight: bold; color: #00A0FF; margin: 15px 0 10px 0;">In-Game Role</p>
+                    <p style="text-align: center; line-height: 1.6; margin: 10px 0;">
+                        Narrator and guide<br>
+                        Unlocks Lova's route if bonded with<br>
+                        May lie, mislead, or emotionally blackmail the player for fun<br><br>
+                        <em>The truth? Probably…</em>
+                    </p>
+                    
+                    <p style="text-align: center; font-weight: bold; color: #00A0FF; margin: 15px 0 10px 0;">Bon-Bon was manifested</p>
+                    <p style="text-align: center; line-height: 1.6; margin: 10px 0;">
+                        Lova spent years projecting all her unspoken pain, unresolved grief, and deeply repressed affection into her weapon. The axe never talked back... until one day it did.<br><br>
+                        Maybe it was her faith. Maybe it was a curse. Maybe emotions really do have weight, and hers finally tipped the scale. Whatever the reason, Bon-Bon became sentient during a battle she never got to finish. And then she vanished. No goodbye. Just gone.
+                    </p>
+                    
+                    <p style="text-align: center; line-height: 1.6; margin: 10px 0; font-style: italic;">
+                        "She left me. Left without a word, without even turning around. I was there…carved from everything she refused to feel. And when it all got too heavy, she dropped me like a weight she didn't want to carry anymore."
+                    </p>
+                    
+                    <p style="text-align: center; line-height: 1.6; margin: 10px 0;">
+                        Now Bon-Bon is stuck with you. And here's the kicker…he's not doing this to help you. He's doing it out of pure, spite-driven curiosity.
+                    </p>
+                    
+                    <p style="text-align: center; line-height: 1.6; margin: 10px 0; font-style: italic;">
+                        "See, turns out, when you're made of someone else's emotional repression, you don't get a lot of closure. And when that someone ghosts you without so much as a 'thanks for carrying my trauma,' you either shrivel up in the sand... or reinvent yourself."
+                    </p>
+                    
+                    <p style="text-align: center; line-height: 1.6; margin: 10px 0;">
+                        So Bon-Bon reinvented himself as the ultimate petty act of rebellion: A love guide
+                    </p>
+                    
+                    <div style="margin: 30px auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1000px;">
+                        <div style="text-align: center;">
+                            <img src="image/Projects/Bon_1.jpg" alt="Bon Bons Screenshot 1" style="max-width: 100%; height: auto; border: 2px solid white; border-radius: 4px;">
+                        </div>
+                        <div style="text-align: center;">
+                            <img src="image/Projects/Bon_2.jpg" alt="Bon Bons Screenshot 2" style="max-width: 100%; height: auto; border: 2px solid white; border-radius: 4px;">
+                        </div>
+                        <div style="text-align: center; grid-column: 1 / -1; justify-self: center; max-width: 300px;">
+                            <img src="image/Projects/Bon_3.jpg" alt="Bon Bons Screenshot 3" style="max-width: 100%; height: auto; border: 2px solid white; border-radius: 4px;">
+                        </div>
+                    </div>
+                    
+                    <h3 style="font-size: 1.2em; color: #00A0FF; margin: 20px 0 10px 0;">DEMO GAMEPLAY</h3>
+                    <p style="text-align: center; margin: 15px 0; font-size: 0.95em; line-height: 1.6;">Watch the gameplay in action as you explore the colorful world of Bon Bons, solve puzzles, and interact with the charming characters.</p>
+                    <div style="text-align: center; margin: 20px 0;">
+                        <img src="image/Projects/Video_Demo.gif" alt="Demo Gameplay" style="max-width: 95%; width: 650px; height: auto; border: 2px solid white; border-radius: 4px;">
+                    </div>
+                </section>
+
+                <!-- Subterria Project -->
+                <section id="subterria" class="content-section">
+                    <h2 style="margin: 20px 0 15px 0; font-size: 1.8em; border-bottom: 2px solid white; padding-bottom: 10px;">SUBTERRIA RISING</h2>
+                    
+                    <div id="comic-viewer" style="text-align: center; margin: 30px 0;">
+                        <div class="comic-book">
+                            <div class="page-container">
+                                <div class="book-wrapper">
+                                    <!-- Cover page with transparent right page -->
+                                    <div class="page page-cover" id="cover-page" style="position: relative; z-index: 1;">
+                                        <img id="cover-page-img" src="image/Comic/cover 1.png" alt="Cover Page">
+                                    </div>
+                                    <!-- Transparent right page next to cover -->
+                                    <div class="page page-right" id="transparent-page" style="background: transparent; border: none; box-shadow: none;">
+                                    </div>
+                                    <!-- Two-page spread (hidden initially, flips in after cover) -->
+                                    <div class="page-flipper" id="page-flipper" style="position: relative; z-index: 2; display: none;">
+                                        <div class="page page-left" id="left-page">
+                                            <img id="left-page-img" src="image/Comic/extra 1.png" alt="Left Page">
+                                        </div>
+                                        <div class="page page-right" id="right-page">
+                                            <img id="right-page-img" src="image/Comic/extra 2.png" alt="Right Page">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="comic-controls" style="display: flex; justify-content: center; align-items: center; gap: 20px; margin: 30px 0;">
+                                <button id="prev-page" class="comic-btn" style="padding: 10px 20px; background: rgba(0, 160, 255, 0.3); border: 2px solid #00A0FF; color: white; font-family: 'VCR_OSD_Mono', monospace; cursor: pointer; font-size: 0.9em; border-radius: 4px; transition: all 0.3s;">← PREVIOUS</button>
+                                
+                                <span id="page-counter" style="font-size: 1.1em; color: #00A0FF; min-width: 120px;">Cover</span>
+                                
+                                <button id="next-page" class="comic-btn" style="padding: 10px 20px; background: rgba(0, 160, 255, 0.3); border: 2px solid #00A0FF; color: white; font-family: 'VCR_OSD_Mono', monospace; cursor: pointer; font-size: 0.9em; border-radius: 4px; transition: all 0.3s;">NEXT →</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const comicPages = [
+    'image/Comic/cover 1.png',
+    'image/Comic/extra 1.png',
+    'image/Comic/extra 2.png',
+    'image/Comic/Lova 1-10.jpg',
+    'image/Comic/Lova 2-10.png',
+    'image/Comic/Lova 3-10.jpg',
+    'image/Comic/Lova 4-10.jpg',
+    'image/Comic/Lova 5-10.jpg',
+    'image/Comic/Lova 6-10.png',
+    'image/Comic/Lova 7-10.png',
+    'image/Comic/Lova 8-10.png',
+    'image/Comic/Lova 9-10.png',
+    'image/Comic/Lova 10-10.png'
+];
+
+let currentPage = 0; // 0 = cover, 1+ = spreads
+const isFlipping = false;
+
+window.onload = () => {
+    // Jump back expandable items
+    const expandableBackItems = document.querySelectorAll('.jump-back-item.expandable');
+    
+    expandableBackItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const expandId = item.dataset.expand;
+            const submenu = document.getElementById(expandId + '-submenu');
+            
+            item.classList.toggle('expanded');
+            submenu.classList.toggle('show');
+        });
+    });
+
+    // Show active section based on hash
+    const showActiveSection = () => {
+        const hash = window.location.hash.slice(1) || 'bon'; // Default to 'bon'
+        const sections = document.querySelectorAll('.content-section');
+        sections.forEach(section => section.classList.remove('active'));
+        const activeSection = document.getElementById(hash);
+        if (activeSection) {
+            activeSection.classList.add('active');
+        }
+    };
+
+    showActiveSection();
+    window.addEventListener('hashchange', showActiveSection);
+
+    // Comic flipper functionality
+    const prevBtn = document.getElementById('prev-page');
+    const nextBtn = document.getElementById('next-page');
+    const coverPageImg = document.getElementById('cover-page-img');
+    const coverPage = document.getElementById('cover-page');
+    const leftPageImg = document.getElementById('left-page-img');
+    const rightPageImg = document.getElementById('right-page-img');
+    const pageFlipper = document.getElementById('page-flipper');
+    const pageCounter = document.getElementById('page-counter');
+
+    if (prevBtn && nextBtn) {
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 0) {
+                pageFlipper.classList.add('flip-left');
+                
+                setTimeout(() => {
+                    currentPage--;
+                    updateBookPages();
+                    pageFlipper.classList.remove('flip-left');
+                }, 400);
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentPage === 0) {
+                // First flip - cover flips to reveal pages inside
+                coverPage.classList.add('flip-right');
+                
+                setTimeout(() => {
+                    coverPage.style.display = 'none';
+                    pageFlipper.style.display = 'flex';
+                    currentPage++;
+                    updateBookPages();
+                    coverPage.classList.remove('flip-right');
+                }, 400);
+            } else if (currentPage < comicPages.length) {
+                // Subsequent flips
+                pageFlipper.classList.add('flip-right');
+                
+                setTimeout(() => {
+                    currentPage++;
+                    updateBookPages();
+                    pageFlipper.classList.remove('flip-right');
+                }, 400);
+            }
+        });
+    }
+
+    function updateBookPages() {
+        if (currentPage === 1) {
+            // First pages after cover
+            leftPageImg.src = comicPages[1];
+            rightPageImg.src = comicPages[2];
+            pageCounter.textContent = `Pages 1-2 / ${comicPages.length}`;
+        } else if (currentPage > 1) {
+            // Regular spreads
+            const pageIndex = (currentPage - 1) * 2;
+            leftPageImg.src = comicPages[pageIndex] || comicPages[comicPages.length - 1];
+            rightPageImg.src = comicPages[pageIndex + 1] || comicPages[comicPages.length - 1];
+            pageCounter.textContent = `Pages ${pageIndex + 1}-${Math.min(pageIndex + 2, comicPages.length)} / ${comicPages.length}`;
+        } else {
+            pageCounter.textContent = 'Cover';
+        }
+    }
+
+    // Initialize first view
+    updateBookPages();
+};
+</script>
+
+<!-- Sound Effects -->
+<audio id="clickSound" src="audio/sifi click 2.wav" preload="auto"></audio>
+
+<script>
+  function playClickAudio() {
+    const clickAudio = document.getElementById('clickSound');
+    clickAudio.currentTime = 0;
+    clickAudio.play().catch(()=>{});    
+  }
+
+  function playAudioBeforeRedirect(url) {
+    const clickAudio = document.getElementById('clickSound');
+    clickAudio.currentTime = 0;
+    clickAudio.play();
+    setTimeout(() => {
+      window.location.href = url;
+    }, 500);
+  }
+</script>
+<script src="script.js"></script>
+
+</body>
+</html>
